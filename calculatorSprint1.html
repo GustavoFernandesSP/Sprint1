@@ -3,9 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora Rendimentos StrawTech</title>
+    <title>Calculadora Ganhos com o gerenciador de ambiente.</title>
   </head>
   <body>
-    <h1>Calcular ganhos da sua colheita gerenciada pela StrawTech</h1>
+    Informe o lucro da safra R$:
+    <input type="number" id="input_valorTotalLucro" />
+    <br />
+    <br />
+    Informe a porcentagem de perca da safra:
+    <input type="number" id="input_porcentagemPerca" /> %
+
+    <br />
+    <br />
+
+    <button onclick="calcularGanhos()">Calcular lucros com a StrawTech</button>
+    <br />
+    <div id="exibir"></div>
   </body>
 </html>
+<script>
+  function calcularGanhos() {
+    var valorTotalLucrosSemSolucao = Number(input_valorTotalLucro.value);
+    // estou pegando o valor total dos lucros que o produtor ganha em sua safra de morango.
+    var porcentagemDePerca = Number(input_porcentagemPerca.value);
+    // estou pegando a porcentagem que o produtor perde em sua safra.
+
+    var valorPercaTotalSemSolução =
+      (valorTotalLucrosSemSolucao * porcentagemDePerca) / 100;
+    // estou calculando o valor da safra pegando a porcentagem que ele perde dos seus ganhos.
+
+    var PorcentagemaposUsoDaSolução = (porcentagemDePerca * 70) / 100;
+    // Calculo 70% da porcentagem que o agricultor irá ganhar com a implementação do nosso sisstema.
+
+    var calcGanhoComASolucao =
+      (valorTotalLucrosSemSolucao * PorcentagemaposUsoDaSolução) / 100;
+    // Calculando a média da safra com a nova porcentagem dos ganhos.
+
+    var calcPorcSolucaoMenosPorcPerca =
+      porcentagemDePerca - PorcentagemaposUsoDaSolução;
+    // calcular o ganho das porcentagem.
+
+    var TotalComASolucao = valorTotalLucrosSemSolucao + calcGanhoComASolucao;
+    // calculando o valor total da safra junto com o ganho da nova porcentagem.
+
+    exibir.innerHTML = `<br/> 
+    O valor perdido com seus Lucros é de <b style="color: red">R$:${valorPercaTotalSemSolução}</b> 
+    <br>
+    Com o gerenciamento da StrawTech você irá ter redução de <b style="color: green">70%</b> das suas percas. 
+    <br/> 
+    Tendo a sua porcentagem de: <b style="color: red">${porcentagemDePerca}%</b> diminuida para: <b style="color: green">${calcPorcSolucaoMenosPorcPerca}%</b> 
+    <br/>
+    Fazendo seu lucro aumentar em <b style="color: green">${PorcentagemaposUsoDaSolução}%</b> 
+    <br/> 
+    Obtendo um total do valor da safra de: <b style="color: green">R$:${TotalComASolucao}</b> `;
+  }
+</script>
