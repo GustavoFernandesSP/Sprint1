@@ -6,55 +6,79 @@
     <title>Calculadora Ganhos com o gerenciador de ambiente.</title>
   </head>
   <body>
-    Informe o lucro da safra R$:
-    <input type="number" id="input_valorTotalLucro" />
-    <br />
-    <br />
-    Informe a porcentagem de perca da safra:
-    <input type="number" id="input_porcentagemPerca" /> %
+
+    Informe seu nome: <input type="text" id="Input_NomeDaPessoaResponsável">
+
+    <br><br>
+    Informe o Nome da fazenda: <input type="text" id="Input_nomeDaFazenda">
+    <br><br>
+
+    Informe a quantidade(Kg) que produz no total :
+    <input type="number" id="Input_quantidadeTotalProduzida" />
 
     <br />
     <br />
 
-    <button onclick="calcularGanhos()">Calcular lucros com a StrawTech</button>
+    Informe a quantidade(Kg) de perda:
+    <input type="number" id="input_quantidadeTotalPerdida" /> <p>Se não souber pode deixar em branco que vamos aplicar uma média de 20% que normalmente é perdidada por safra.</p> 
+
     <br />
+
+    Informe o valor do Kg que você vende o morango:
+    <input type="number" id="input_valorVendaDoMorango" /> 
+
+    <br>
+    <br>
+
+    <button onclick="calcularGanhos()">Calcular lucros com a sulução da StrawTech</button>
+    <br />
+    <br><br>
     <div id="exibir"></div>
+
+    <b style="color: red;"> </b>    <b style="color: green;"> </b>
+
+
   </body>
 </html>
 <script>
   function calcularGanhos() {
-    var valorTotalLucrosSemSolucao = Number(input_valorTotalLucro.value);
-    // estou pegando o valor total dos lucros que o produtor ganha em sua safra de morango.
-    var porcentagemDePerca = Number(input_porcentagemPerca.value);
-    // estou pegando a porcentagem que o produtor perde em sua safra.
+ 
+    var NomeDaPessoaResponsável = Input_NomeDaPessoaResponsável.value;
+    var NomeDaFazenda = Input_nomeDaFazenda.value;
+    var QuantidadeTotalProduzida = Number(Input_quantidadeTotalProduzida.value);
+    var ValorQuantidadePerda = Number(input_quantidadeTotalPerdida.value);
+    var ValorVendaDosMorangos = Number(input_valorVendaDoMorango.value);
 
-    var valorPercaTotalSemSolução =
-      (valorTotalLucrosSemSolucao * porcentagemDePerca) / 100;
-    // estou calculando o valor da safra pegando a porcentagem que ele perde dos seus ganhos.
+// Reatribuindo o valor, se o imput vir como 0 ele vai pegar 20% do valor total que é produzido.
+    if(ValorQuantidadePerda == 0){
 
-    var PorcentagemaposUsoDaSolução = (porcentagemDePerca * 70) / 100;
-    // Calculo 70% da porcentagem que o agricultor irá ganhar com a implementação do nosso sisstema.
+      var CalcularQuantidadePerda = (QuantidadeTotalProduzida / 100) * 20;
 
-    var calcGanhoComASolucao =
-      (valorTotalLucrosSemSolucao * PorcentagemaposUsoDaSolução) / 100;
-    // Calculando a média da safra com a nova porcentagem dos ganhos.
+      ValorQuantidadePerda = CalcularQuantidadePerda;
+    }
 
-    var calcPorcSolucaoMenosPorcPerca =
-      porcentagemDePerca - PorcentagemaposUsoDaSolução;
-    // calcular o ganho das porcentagem.
+    // Calcular o valor total liquido Final.
+    var CalcTotalComAPerdaValorpassado = (QuantidadeTotalProduzida - ValorQuantidadePerda) * ValorVendaDosMorangos;   
+    
+    // calcular o valor do morango com o valor da perda já multiplicado.
+    var ValorPerdidoDaSafra = ValorQuantidadePerda * ValorVendaDosMorangos;
+    
+    // Calculando valor perdido da safra com a porcentagem de 25% que o nosso sistema trás de benefício.
+    var ValorTotalPerdidoDaSafraComONossoSistema = ValorPerdidoDaSafra - (ValorPerdidoDaSafra * 0.25)   ;
+    
+    // Multiplicar o valor perdido da safra com o valor ganho do nosso sisstema para obter o valor total ganho
+    var ValorPerdidoDaSafraComONossoSistema = ValorPerdidoDaSafra * 0.25;
+    
+    // somando o valor liquido dos ganhos com o novo valor de perca do nosso sisstema.
+    var ValorTotalFinalComONossoProduto = ValorPerdidoDaSafraComONossoSistema + CalcTotalComAPerdaValorpassado;
 
-    var TotalComASolucao = valorTotalLucrosSemSolucao + calcGanhoComASolucao;
-    // calculando o valor total da safra junto com o ganho da nova porcentagem.
-
-    exibir.innerHTML = `<br/> 
-    O valor perdido com seus Lucros é de <b style="color: red">R$:${valorPercaTotalSemSolução}</b> 
+    exibir.innerHTML = ` Olá ${NomeDaPessoaResponsável} a fazenda ${NomeDaFazenda} está faturando atualmente um valor total de R$:${CalcTotalComAPerdaValorpassado} <br> 
+    O Valor perdido de morango se refere a <b style="color: red;">R$:${ValorPerdidoDaSafra} </b>
     <br>
-    Com o gerenciamento da StrawTech você irá ter redução de <b style="color: green">70%</b> das suas percas. 
-    <br/> 
-    Tendo a sua porcentagem de: <b style="color: red">${porcentagemDePerca}%</b> diminuida para: <b style="color: green">${calcPorcSolucaoMenosPorcPerca}%</b> 
-    <br/>
-    Fazendo seu lucro aumentar em <b style="color: green">${PorcentagemaposUsoDaSolução}%</b> 
-    <br/> 
-    Obtendo um total do valor da safra de: <b style="color: green">R$:${TotalComASolucao}</b> `;
+    Com o nosso produto irá reduzir o valor perdido da safra de <b style="color: red;">R$:${ValorPerdidoDaSafra}</b> para <b style="color: green;">R$:${ValorTotalPerdidoDaSafraComONossoSistema}
+    </b>.
+    Assim tendo um lucro de <b style="color: green;">+R$:${ValorPerdidoDaSafraComONossoSistema}</b>. 
+    <br>
+    Obtendo um valor final de <b style="color: green;">R$:${ValorTotalFinalComONossoProduto}</b>.`;
   }
 </script>
